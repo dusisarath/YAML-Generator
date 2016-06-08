@@ -29,8 +29,50 @@ var request = require('request');
 //  console.log("server starting on " + appEnv.url);
 //});
 
-request('http://www.google.com', function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-	    console.log(body) // Show the HTML for the Google homepage. 
-	  }
-	})
+//request('https://new-console.ng.bluemix.net/devops/pipelines/007f171e-6882-41aa-9400-0de574ae3052', function (error, response, body) {
+//	  if (!error && response.statusCode == 200) {
+//	    console.log(body) // Show the HTML for the Google homepage. 
+//	  }
+//	});
+var agentOptions = {
+	    securityOptions: 'SSL_OP_NO_SSLv3',
+	    secureProtocol: 'TLSv1_2_method'
+	};
+
+var PIPELINE_API_URL = "https://new-console.ng.bluemix.net/devops";
+
+request = request.defaults({
+	strictSSL: false,
+	maxSockets: 200,
+	timeout: 60*1000 // 1 min
+});
+function printYaml(req, callback) {
+	var options = {
+		method: "GET",
+		uri: PIPELINE_API_URL + "/pipelines/" + "007f171e-6882-41aa-9400-0de574ae3052",
+//		headers: {
+//            Authorization: req.headers["authorization"]
+//        },
+    	json: true,
+        agentOptions: agentOptions
+	};
+	console.log(options.uri);
+	request(options, function(error, res, body) {
+		console.log("----------response code------------:\n", res);
+		if (error != null) {
+			callback(error, body);
+		} else if (res.statusCode != 200) {
+			var invalidResponseError = new Error();
+			invalidResponseError.statusCode = res.statusCode;
+			invalidResponseError.details = (res.body && res.body.message) || "Unexpected response code " + res.statusCode + " updating pipeline"
+			callback(invalidResponseError, body);
+		} else {
+			console.log("from here");
+			callback(null, body);
+		}
+	});
+}
+
+printYaml(function(error, response){
+	console.log(response);
+});
