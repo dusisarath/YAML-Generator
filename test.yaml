@@ -1,0 +1,45 @@
+---
+stages:
+- name: BUILD
+  inputs:
+  - url: https://github.com/dusisarath/Sample-Tool-Chain-Project.git
+    type: git
+    branch: master
+    dir_name: null
+  triggers:
+  - type: commit
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+- name: DEPLOY
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build
+    dir_name: null
+  triggers:
+  - type: stage
+  properties:
+  - name: CF_APP_NAME
+    value: undefined
+    type: text
+  - name: APP_URL
+    value: undefined
+    type: text
+  jobs:
+  - name: Deploy
+    type: deployer
+    target:
+      region_id: ibm:yp:us-south
+      organization: dusisarath@in.ibm.com
+      space: prod
+      application: sample-simple-toolchain-1464600378672
+    script: |
+      #!/bin/bash
+      # Push app
+      export CF_APP_NAME="$CF_APP"
+      cf push "${CF_APP_NAME}"
+      export APP_URL=http://$(cf app $CF_APP_NAME | grep urls: | awk '{print $2}')
+      # View logs
+      #cf logs "${CF_APP_NAME}" --recent
