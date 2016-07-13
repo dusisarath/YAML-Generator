@@ -16,7 +16,7 @@ PipelineMigrationApp.factory('MigrationService', ['Restangular',
 	
     var getYaml = function(data) {
     	var migration = Restangular.one('service','yaml');
-    	return migration.get(data);
+    	return migration.customPOST(data);
     };
     
     var createPipeline = function() {

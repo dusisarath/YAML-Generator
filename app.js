@@ -103,10 +103,6 @@ var github = require('octonode');
 // for more info, see: http://expressjs.com
 var express = require('express');
 
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-var cfenv = require('cfenv');
-
 // add request module
 var request = require('request');
 
@@ -117,11 +113,18 @@ var fs = require('fs');
 // create a new express server
 var app = express();
 
-// serve the files out of ./public as our main files
+
+
+var bodyParser = require('body-parser');
+
+var port = (process.env.VCAP_APP_PORT || 6001);
+var host = (process.env.VCAP_APP_HOST || 'localhost');
+
+//serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
-// get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
+app.use(bodyParser.json());
+
 // --------------- git related code --------------------
 var client = github.client({
 	  username: 'dusisarath',
@@ -186,15 +189,15 @@ function printYaml(req, callback) {
 	});
 }
 
-app.get('/rest/service/yaml',function(req, res) {
+app.post('/rest/service/yaml',function(req, res) {
 //  	var jsonData = jsyaml.load(yamlFileContent);
 //  	var jsonDataString = JSON.stringify(jsonData);
 //    //res.send('Get a random book');
 //    res.send(jsonDataString);
 	  var reqBody = {
-			  userName : req.query.userName,
-			  password : req.query.password,
-	          pipelineUrl : req.query.pipelineUrl
+			  userName : req.body.userName,
+			  password : req.body.password,
+	          pipelineUrl : req.body.pipelineUrl
 	  };
 	  
 	  console.log(JSON.stringify(reqBody));
@@ -314,7 +317,8 @@ app.route('/rest/service/redirect')
 
 //	});
 // start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function() {
+app.listen(port, function() {
   // print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
+  console.log("server starting on " + port);
 });
+
