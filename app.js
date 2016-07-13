@@ -210,7 +210,7 @@ app.post('/rest/service/yaml',function(req, res) {
 //    	console.log("In JSON Format: \n" + dataInJsonString);
     	var sampleRepo = {service: "${SAMPLE_REPO}"};
     	//console.log(dataInJson.stages[0].inputs[0]);
-    	dataInJson.stages[0].inputs[0].service = "${SAMPLE_REPO2}";
+    	dataInJson.stages[0].inputs[0].service = "${SAMPLE_REPO}";
     	var content = jsyaml.dump(dataInJson);
     	console.log("##########Changed File: #########\n" + content);
     	var dataInJsonString = JSON.stringify(dataInJson);
