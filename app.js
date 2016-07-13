@@ -211,6 +211,11 @@ app.post('/rest/service/yaml',function(req, res) {
     	var sampleRepo = {service: "${SAMPLE_REPO}"};
     	//console.log(dataInJson.stages[0].inputs[0]);
     	dataInJson.stages[0].inputs[0].service = "${SAMPLE_REPO}";
+    	dataInJson.stages[1].jobs[0].target[0].region_id = "${PROD_REGION_ID}";
+    	dataInJson.stages[1].jobs[0].target[0].organization = "${PROD_ORG_NAME}";
+    	dataInJson.stages[1].jobs[0].target[0].space = "${PROD_SPACE_NAME}";
+    	dataInJson.stages[1].jobs[0].target[0].application = "${CF_APP_NAME}";
+    	
     	var content = jsyaml.dump(dataInJson);
     	console.log("##########Changed File: #########\n" + content);
     	var dataInJsonString = JSON.stringify(dataInJson);
