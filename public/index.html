@@ -20,7 +20,7 @@
   <div class="row">  
     <div class="col-md-3"></div>
     <div class="col-md-6"> 
-      <div style="text-align:center;"><br><H1>OTC Migration</H1><br></div>  
+      <div style="text-align:center;"><br><H1>Pipeline Migration</H1><br></div>  
       <div> <small> Fields marked with * are mandatory</small><br> </div>  
       <form name="form" role="form" class="ng-scope ng-invalid ng-invalid-required ng-dirty" ng-submit="getYaml()">
                 <div class="form-group">
@@ -34,7 +34,7 @@
 			  		</div><br>
 			  		<div>
 			  			<div>* <label>IDSv1 Pipeline URL:</label></div>
-			  		    <div><input class="form-control" type="text" name="pipelineUrl" size="50" ng-model="data.pipelineUrl" placeholder="Copy\Paste the URL from project's TRACK & PLAN -> Project Dashboard" required ng-disabled="migrationInProgress" ng-change="updateDevopsLink()"></div>			  		     
+			  		    <div><input class="form-control" type="text" name="pipelineUrl" size="50" ng-model="data.pipelineUrl" placeholder="Copy\Paste the Pipeline URL from project's Build & Deploy -> Project Dashboard" required ng-disabled="migrationInProgress" ng-change="updateDevopsLink()"></div>			  		     
 			  		</div><br>
 			  		
 			  		<div style="text-align:center;">
