@@ -233,7 +233,7 @@ app.post('/rest/service/yaml',function(req, res) {
     	    	//console.log("Dumped YAML: \n" + dataInJsonString2);
     	    	console.log(Yaml);
     	    	console.log(dataInJson.stages[0].inputs);
-    	    	console.loh("----Dusi----: " + dataInJson.stages[1].jobs[0].target);
+    	    	console.log("----Dusi----: " + dataInJson.stages[1].jobs[0].target);
     	    	//console.log(dataInJsonString);
     	    	
     	    	//res.send(dataInJsonString);
