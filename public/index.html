@@ -1,25 +1,54 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <title>NodeJS Starter Application</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pipeline Migration</title>
+    <!-- Use Bootstrap -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="bower_components/restangular/dist/restangular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="maincontroller.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="stylesheets/style.css">
   </head>
-
-  <body>
-    <table>
-      <tr>
-        <td style= "width:30%;">
-          <img class = "newappIcon" src="images/newapp-icon.png">
-        <td>
-            <h1>Hi there!</h1>
-          <p>Thanks for creating a
-            <span class = "blue">NodeJS Starter Application</span>.
-            To get started see the Start Coding guide under your app in your dashboard.
-    </table>
+   
+  <body ng-app="PipelineMigrationApp" ng-controller="MainController">
+    
+  <div class="row">  
+    <div class="col-md-3"></div>
+    <div class="col-md-6"> 
+      <div style="text-align:center;"><br><H1>OTC Migration</H1><br></div>  
+      <div> <small> Fields marked with * are mandatory</small><br> </div>  
+      <form name="form" role="form" class="ng-scope ng-invalid ng-invalid-required ng-dirty" ng-submit="getYaml()">
+                <div class="form-group">
+                    <div>
+			  		    <div>* <label>IBM ID:</label></div>
+			  			<div><input class="form-control" type="text" name="userName" size="50" ng-model="data.userName" placeholder="IBM ID" required ng-disabled="migrationInProgress" ng-change="updateUserName()"></div>
+			  		</div><br>
+			  		<div>
+			  			<div>* <label>Password:</label></div>
+			  			<div><input class="form-control" type="password" name="password" size="50" ng-model="data.password" placeholder="Password" required ng-disabled="migrationInProgress"></div>
+			  		</div><br>
+			  		<div>
+			  			<div>* <label>IDSv1 Pipeline URL:</label></div>
+			  		    <div><input class="form-control" type="text" name="pipelineUrl" size="50" ng-model="data.pipelineUrl" placeholder="Copy\Paste the URL from project's TRACK & PLAN -> Project Dashboard" required ng-disabled="migrationInProgress" ng-change="updateDevopsLink()"></div>			  		     
+			  		</div><br>
+			  		
+			  		<div style="text-align:center;">
+			  					<button class="btn btn-primary">Start Migration</button><br>
+			  		</div>	<br/>
+			  		
+			  		<div>
+			  			<div ng-show="displayValue"><label>Updated Yaml:</label></div>
+			  		    <div ng-show="displayValue">{{displayValue}}</div>			  		     
+			  		</div><br>		  		
+		  		</div>
+	  </form>
+    </div> 
+    <div class="col-md-3"> </div>
+  </div>
   </body>
-
 </html>
